@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Shop.qm</file>
+        <file>dostavka.png</file>
+    </qresource>
+</RCC>

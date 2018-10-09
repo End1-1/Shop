@@ -1,0 +1,24 @@
+IDI_ICON              ICON    DISCARDABLE     "app.ico"
+1 VERSIONINFO
+FILEVERSION 2,1,2,26
+PRODUCTVERSION 2,1,2,26
+FILEFLAGSMASK 0x3fL
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904e4"
+        BEGIN
+            VALUE "FileVersion", "2,1,2,26"
+            VALUE "FileDescription", "Sale point"
+            VALUE "LegalCopyright", "(C)2005-2018, Kudryashov Vasily"
+            VALUE "Email", "end1_1@yahoo.com"
+            VALUE "ProductName", "Sale point"
+            VALUE "ProductVersion", "2"
+        END
+    END
+
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
+    END
+END
