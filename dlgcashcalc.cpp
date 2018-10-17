@@ -14,11 +14,14 @@ DlgCashCalc::~DlgCashCalc()
     delete ui;
 }
 
-bool DlgCashCalc::getCash(double amount)
+bool DlgCashCalc::getCash(double amount, double &cash)
 {
     DlgCashCalc *d = new DlgCashCalc(0);
     d->ui->leAmount->setText(QString::number(amount, 'f', 0));
     bool result = d->exec() == QDialog::Accepted;
+    if (result) {
+        cash = d->ui->leCash->text().toDouble();
+    }
     delete d;
     return result;
 }

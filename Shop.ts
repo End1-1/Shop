@@ -10,7 +10,7 @@
     </message>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -83,66 +83,90 @@
         <source>Tax payer</source>
         <translation>ՀՎՀՀ</translation>
     </message>
+    <message>
+        <source>Department</source>
+        <translation>Բաժին</translation>
+    </message>
+    <message>
+        <source>Devnum</source>
+        <translation>ԳՀ</translation>
+    </message>
+    <message>
+        <source>(F)</source>
+        <translation>(Ֆ)</translation>
+    </message>
+    <message>
+        <source>ADG</source>
+        <translation>Դաս․</translation>
+    </message>
+    <message>
+        <source>Cash</source>
+        <translation>Կանխիկ</translation>
+    </message>
+    <message>
+        <source>Change</source>
+        <translation>Մանր</translation>
+    </message>
 </context>
 <context>
     <name>DQty</name>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
     <name>DQuickGoods</name>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
     <name>DlgCashCalc</name>
     <message>
         <source>Change</source>
-        <translation type="unfinished"></translation>
+        <translation>Մանր</translation>
     </message>
     <message>
         <source>Cash</source>
-        <translation type="unfinished"></translation>
+        <translation>Կանխիկ</translation>
     </message>
     <message>
         <source>Amount</source>
-        <translation type="unfinished">Գումար</translation>
+        <translation>Գումար</translation>
     </message>
     <message>
         <source>SAVE</source>
-        <translation type="unfinished"></translation>
+        <translation>ՊԱՀՊԱՆԵԼ</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Հրաժարվել</translation>
     </message>
     <message>
         <source>1000</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>5000</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>10000</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>15000</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>20000</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>?</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -167,30 +191,30 @@
     </message>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Card amount:</source>
-        <translation type="unfinished"></translation>
+        <translation>Անկանխիկ գումար</translation>
     </message>
     <message>
         <source>Partner tax code</source>
-        <translation type="unfinished"></translation>
+        <translation>Վճարողի ՀՎՀՀ</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>ԱՅՈ</translation>
     </message>
 </context>
 <context>
     <name>PrintTaxN</name>
     <message>
         <source>Socket read error</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Data read timeout</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 </TS>

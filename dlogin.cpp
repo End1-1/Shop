@@ -221,8 +221,8 @@ void DLogin::writeOrder()
     if (!m_db.openDB())
         return;
 
-    DlgCashCalc::getCash(ui->tblTotal->item(0, 4)->data(Qt::EditRole).toDouble());
-
+    DlgCashCalc::getCash(ui->tblTotal->item(0, 4)->data(Qt::EditRole).toDouble(), cash);
+    change = cash - ui->tblTotal->item(0, 4)->data(Qt::EditRole).toDouble();
     /* TAXXXXX */
     if (!ui->tblGoods->rowCount())
         return;
@@ -231,16 +231,16 @@ void DLogin::writeOrder()
     QString partnerTin;
     DlgSelectTaxDep *dlg = new DlgSelectTaxDep(amount, partnerTin, this);
     dlg->exec();
-    int dep = dlg->result;
+    fDep = dlg->result;
     delete dlg;
-    dep = 1;
+    fDep = 1;
 
     amount = amountCard;
     amountCard = 0;
     PrintTaxN pt(getx("taxip").toString(), getx("taxport").toInt(), getx("taxpass").toString());
     pt.fPartnerTin = partnerTin;
     for (int i = 0; i < ui->tblGoods->rowCount(); i++) {
-        pt.addGoods(QString::number(dep),
+        pt.addGoods(QString::number(fDep),
                 ui->tblGoods->item(i, 5)->data(Qt::EditRole).toString(),
                 ui->tblGoods->item(i, 0)->data(Qt::EditRole).toString(),
                 ui->tblGoods->item(i, 1)->data(Qt::EditRole).toString(),
@@ -293,38 +293,46 @@ void DLogin::writeOrder()
 
 void DLogin::printOrder(const QString &taxOut)
 {
-    QString firm, hvhh, fiscal, number, sn, address;
-    PrintTaxN::parseResponse(taxOut, firm, hvhh, fiscal, number, sn, address);
+    QString firm, hvhh, fiscal, number, sn, address, devnum;
+    PrintTaxN::parseResponse(taxOut, firm, hvhh, fiscal, number, sn, address, devnum);
     SizeMetrics sm(___printerInfo->resolution("local"));
     XmlPrintMaker pm(&sm);
     pm.setFontName(qApp->font().family());
-    pm.setFontSize(10);
+    pm.setFontSize(8);
     int top = 5;
     int num = 1;
 
     pm.text(firm, 0, top);
-    top += pm.lastTextHeight() + 1;
+    top += pm.lastTextHeight();
     pm.text(address, 0, top);
-    top += pm.lastTextHeight() + 1;
+    top += pm.lastTextHeight();
+    pm.text(tr("Department"), 0, top);
+    pm.textRightAlign(QString::number(fDep), 60, top);
+    top += pm.lastTextHeight();
+    pm.text(tr("Devnum"), 0, top);
+    pm.textRightAlign(devnum, 60, top);
+    top += pm.lastTextHeight();
     pm.text(tr("Tax SN"), 0, top);
     pm.textRightAlign(sn, 60, top);
-    top += pm.lastTextHeight() + 1;
+    top += pm.lastTextHeight();
     pm.text(tr("Fiscal"), 0, top);
     pm.textRightAlign(fiscal, 60, top);
-    top += pm.lastTextHeight() + 1;
+    top += pm.lastTextHeight();
     pm.text(tr("Tax number"), 0, top);
     pm.textRightAlign(number, 60, top);
-    top += pm.lastTextHeight() + 1;
+    top += pm.lastTextHeight();
     pm.text(tr("Tax payer"), 0, top);
     pm.textRightAlign(hvhh, 60, top);
-    top += pm.lastTextHeight() + 10;
+    top += pm.lastTextHeight();
+    pm.text(tr("(F)"), 0, top);
+    top += pm.lastTextHeight() + 1;
     pm.line(0, top, 80, top);
     top ++;
     top ++;
 
     pm.textCenterAlign(tr("Order N") + QString::number(ui->tblTotal->item(0, 0)->data(Qt::EditRole).toInt()), 60, top);
     top += pm.lastTextHeight() + 1;
-    pm.setFontSize(10);
+    pm.setFontSize(8);
     pm.line(0, top, 80, top);
     top++;
     pm.text("N", 5, top);
@@ -335,26 +343,36 @@ void DLogin::printOrder(const QString &taxOut)
     top += pm.lastTextHeight() + 1;
     pm.line(0, top, 80, top);
     for (int i = 0; i < ui->tblGoods->rowCount(); i++) {
+        pm.text(QString("%1: %2").arg(tr("ADG")).arg(ui->tblGoods->item(i, 5)->data(Qt::EditRole).toString()), 0, top);
+        top += pm.lastTextHeight();
         pm.text(QString("%1.").arg(num), 5, top);
         pm.text(ui->tblGoods->item(i, 1)->data(Qt::EditRole).toString(), 10, top);
         top += pm.lastTextHeight() + 1;
-        pm.text(QString::number(ui->tblGoods->item(i, 2)->data(Qt::EditRole).toDouble(), 'f', 2), 30, top);
-        pm.text(QString::number(ui->tblGoods->item(i, 3)->data(Qt::EditRole).toDouble(), 'f', 0), 45, top);
-        pm.text(QString::number(ui->tblGoods->item(i, 4)->data(Qt::EditRole).toDouble(), 'f', 0), 60, top);
+        pm.textRightAlign(QString::number(ui->tblGoods->item(i, 2)->data(Qt::EditRole).toDouble(), 'f', 2), 30, top);
+        pm.textRightAlign(QString::number(ui->tblGoods->item(i, 3)->data(Qt::EditRole).toDouble(), 'f', 0), 45, top);
+        pm.textRightAlign(QString::number(ui->tblGoods->item(i, 4)->data(Qt::EditRole).toDouble(), 'f', 0), 60, top);
         top += pm.lastTextHeight() + 1;
         pm.line(0, top, 80, top);
         top++;
         pm.checkForNewPage(top);
     }
     pm.line(0, top, 80, top);
-    pm.setFontSize(12);
-    pm.text(tr("Total"), 5, top);
-    pm.text(QString::number(ui->tblTotal->item(0, 4)->data(Qt::EditRole).toDouble(), 'f', 0), 60, top);
-    top += pm.lastTextHeight() + 4;
     pm.setFontSize(10);
+    pm.text(tr("Total"), 0, top);
+    pm.textRightAlign(QString::number(ui->tblTotal->item(0, 4)->data(Qt::EditRole).toDouble(), 'f', 0), 60, top);
+    top += pm.lastTextHeight();
+    if (change > 0.1) {
+        pm.text(tr("Cash"), 0, top);
+        pm.textRightAlign(QString::number(cash, 'f', 0), 60, top);
+        top += pm.lastTextHeight();
+        pm.text(tr("Change"), 0, top);
+        pm.textRightAlign("-" + QString::number(cash - ui->tblTotal->item(0, 4)->data(Qt::EditRole).toDouble(), 'f', 0), 60, top);
+        top += pm.lastTextHeight();
+    }
+    pm.setFontSize(8);
+    top++;
     pm.text(tr("Thank you for visit!"), 5, top);
     top += pm.lastTextHeight() + 2;
-    pm.setFontSize(8);
     pm.text(QDateTime::currentDateTime().toString(DATETIME_FORMAT), 5, top);
     top += pm.lastTextHeight() + 2;
     pm.text(".", 5, top);
@@ -376,6 +394,8 @@ void DLogin::clearOrder()
     if (item->data(Qt::UserRole).toBool())
         item->setFlags(item->flags() ^ Qt::ItemIsEnabled);
     item->setData(Qt::UserRole, false);
+    cash = 0;
+    change = 0;
 }
 
 void DLogin::setFlag()

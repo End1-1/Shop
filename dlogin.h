@@ -36,7 +36,10 @@ protected:
     virtual bool eventFilter(QObject *o, QEvent *e);
 private:
     Ui::DLogin *ui;
+    int fDep;
     DbDriver m_db;
+    double cash;
+    double change;
     void rowUp();
     void rowDown();
     void changeBarcodeColor(QColor color);

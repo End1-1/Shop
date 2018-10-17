@@ -14,7 +14,7 @@ class DlgCashCalc : public QDialog
 public:
     explicit DlgCashCalc(QWidget *parent = 0);
     ~DlgCashCalc();
-    static bool getCash(double amount);
+    static bool getCash(double amount, double &cash);
 private slots:
     void on_leCash_textChanged(const QString &arg1);
 
